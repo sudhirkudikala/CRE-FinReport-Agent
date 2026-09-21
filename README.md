@@ -27,14 +27,14 @@ The system orchestrates a specialized "Crew" of four autonomous micro-agents spl
                                │
                                ▼
               ┌─────────────────────────────────┐
-              │    1. PAX Telemetry Parser      │ ◄── Audits data lineage via versatile MCP Tool,
-              │         (gpt-4o-mini)           │     mapping warehouse to in-memory cells.
+              │    1. PAX Telemetry Parser      │ ◄── Audits data lineage via regex/MDX tools,
+              │         (gpt-4o-mini)           │     extracting formula patterns and faults.
               └────────────────┬────────────────┘
                                │
                                ▼ [Lineage Variance Context]
               ┌─────────────────────────────────┐
-              │  2. CRE Underwriting Matcher    │ ◄── Evaluates consolidation rules, accounting
-              │            (gpt-4o)             │     treatments, and JV dimension offsets.
+              │  2. CRE Underwriting Matcher    │ ◄── Runs Corrective RAG (CRAG) grading firewall
+              │            (gpt-4o)             │     auditing materiality, syncing, & offsets.
               └────────────────┬────────────────┘
                                │
                                ▼ [Impact-Scoped Problem Definition]
@@ -50,13 +50,13 @@ The system orchestrates a specialized "Crew" of four autonomous micro-agents spl
               └─────────────────────────────────┘
 ```
 
-### 🛡️ Enterprise Guardrail Matrix & ServiceNow Integration
-The orchestration engine implements strict functional limitations to protect multi-dimensional cube environments from data corruption or unauthorized automated adjustments. 
+### 🛡️ Enterprise Guardrail Matrix & Corrective RAG (CRAG) Firewall
+The orchestration engine implements strict, deterministic functional limitations to protect multi-dimensional cube environments from data corruption or unauthorized automated adjustments. 
 
-If the crew encounters an issue tied to **complex accounting treatments, cross-dimensional consolidation offsets (Project/Market/Joint Venture), or stranded in-memory "dirty cell" updates**, it invokes the automated enterprise escalation pathway:
-1. **Asynchronous Ticket Generation:** Dispatches a structured REST API payload to initialize a ServiceNow P1 tracking ticket.
-2. **Direct Cube Owner Alert:** Routes an automated warning via internal SMTP Relays containing raw lineage details, uncommitted record counts, and target impact models to the Human Expert.
-3. **Execution Freeze:** Holds back dangerous database modifications, keeping data integrity intact while alerting financial leadership.
+If the crew encounters an issue tied to **complex accounting treatments, cross-dimensional consolidation offsets (Project/Market/Joint Venture), or stranded in-memory "dirty cell" updates**, the system runs a specialized **CRAG Evaluation Gateway** tool to grade the telemetry context before executing any code.
+1. **Deterministic Grading Check:** Evaluates numerical variances against a hardcoded **$50,000,000 Materiality Threshold** and checks for uncommitted dirty cells in the memory layer.
+2. **Asynchronous Ticket Generation:** If a threshold breach or memory lock is flagged, the automation path freezes and dispatches a structured REST API payload to initialize an emergency ServiceNow P1 tracking ticket.
+3. **Direct Cube Owner Alert:** Routes an automated warning via internal SMTP Relays containing raw lineage details, uncommitted record counts, and target impact models directly to the Human Expert.
 
 ---
 
@@ -67,14 +67,17 @@ This repository uses a decoupled, production-ready framework to ensure clean, cr
 ```text
 ├── config/
 │   ├── agents.yaml          # Declarative CrewAI roles, goals, and backstories
-│   └── tasks.yaml           # Step-by-step execution pipelines and expected outputs
+│   └── tasks.yaml           # Step-by-step execution pipelines and CRAG guardrails
 ├── src/
 │   ├── __init__.py
-│   ├── crew.py              # CrewAI initialization & absolute path resolution mappings
+│   ├── crew.py              # CrewAI initialization & lazy tool-import loading maps
 │   ├── main.py              # FastAPI REST Web Gateway & Asynchronous background workers
-│   └── tools/               # Custom Model Context Protocol (MCP) Extensions
-│       ├── escalation_tool.py # ServiceNow REST API and SMTP infrastructure connector
-│       └── mcp_mdx_tool.py  # MDX Query compiler with sliding rate limits & caching
+│   └── tools/               # Custom Extension Module Toolkit
+│       ├── crag_evaluator_tool.py # [NEW] Deterministic CRAG grading engine framework
+│       ├── escalation_tool.py     # ServiceNow REST API and SMTP mail relay connector
+│       ├── finance_diagnostics.py # [NEW] Financial data warehouse lineage auditor
+│       ├── finreport_diagnostics.py # [NEW] Regex filters, MDX and risk mapping suite
+│       └── mcp_mdx_tool.py        # MDX Query compiler with sliding rate limits & caching
 ├── .env.example             # Standardized template for environment variables
 ├── .gitignore               # Strict exclusion matrix (.venv, secrets, local caches)
 └── requirements.txt         # Production-grade enterprise package dependencies
@@ -168,12 +171,3 @@ python src/main.py
 The server will bind to `http://127.0.0.1:8000`. You can interact with the auto-generated documentation portal at **`http://127.0.0`**.
 
 ### 2. Triggering an Audit Payload (`POST /api/v1/diagnose`)
-Submit an unstructured spreadsheet discrepancy anomaly via a network request to kick off non-blocking background multi-agent runs:
-```bash
-curl -X 'POST' \
-  'http://127.0.0' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "business_unit": "BU_7400_CRE_PE",
-  "target_intersection": "Project:JV_09_Offset, Market:NY_Metro",
-  "measure": "Net_Asset_Value",
