@@ -6,6 +6,7 @@ from tools.finreport_diagnostics import (
     regex_tool,
     mdx_tool,
     metadata_tool,
+    google_serper_search,
     PAX_ERROR_PATTERNS,
     FINANCE_DIAGNOSTIC_TOOLS,
 )
@@ -18,6 +19,7 @@ __all__ = [
     "regex_tool",
     "mdx_tool",
     "metadata_tool",
+    "google_serper_search",
     "PAX_ERROR_PATTERNS",
     "FINANCE_DIAGNOSTIC_TOOLS",
 ]

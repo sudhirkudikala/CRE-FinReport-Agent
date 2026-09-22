@@ -144,3 +144,72 @@ def metadata_tool(fault_context: str) -> str:
         ),
     }
     return json.dumps(payload, indent=2)
+
+# Update - Serper web search
+
+class SerperSearchSchema(BaseModel):
+    search_query: str = Field(
+        ..., 
+        description="The targeted search string to look up legacy forum threads or software patches, e.g., 'PAX blank task pane excel addin crash fix'."
+    )
+
+@tool("Google Serper Forum Scraper", args_schema=SerperSearchSchema)
+def google_serper_search(search_query: str) -> str:
+    """
+    Programmatically queries Google via the Serper API to retrieve legacy IT support threads, 
+    IBM knowledge base notes, and software community forum fixes. Use this tool as a fallback 
+    remediation step when client-side errors cannot be resolved via local rule databases.
+    """
+    logger.info(f"🌐 [SERPER SEARCH] Reaching out to live web to scrape fixes for query: {search_query}")
+    
+    serper_key = os.getenv("SERPER_API_KEY")
+    if not serper_key or serper_key == "your_serper_google_scraping_token_here":
+        logger.warning("⚠️ [SERPER SEARCH] Missing or default Serper API key detected. Swapping to offline simulation payload.")
+        return json.dumps({
+            "status": "OFFLINE_SIMULATION",
+            "query": search_query,
+            "message": "Serper key missing from local environment configuration workspace. Returned fallback reference.",
+            "snippets": [
+                "IBM Community: Core PAX Excel task panes freeze when local WebView2 cache folders are corrupted. Fix: Clear %localappdata%/IBM/PlanningAnalytics.",
+                "StackOverflow: Excel add-in VBA macro conflicts can be bypassed by forcing an asynchronous thread load registry adjustment."
+            ]
+        })
+
+    url = "https://serper.dev"
+    headers = {
+        "X-API-KEY": serper_key,
+        "Content-Type": "application/json"
+    }
+    payload = json.dumps({"q": search_query})
+
+    try:
+        response = requests.post(url, headers=headers, data=payload, timeout=6.0)
+        response.raise_for_status()
+        search_results = response.json()
+        
+        # Extract and structuralize organic search results to minimize context window bloat
+        organic_hits = search_results.get("organic", [])
+        clean_snippets = []
+        
+        for hit in organic_hits[:3]:  # Top 3 most accurate text results
+            clean_snippets.append({
+                "title": hit.get("title", ""),
+                "link": hit.get("link", ""),
+                "snippet": hit.get("snippet", "")
+            })
+            
+        return json.dumps({
+            "status": "SUCCESS",
+            "query": search_query,
+            "results": clean_snippets
+        }, indent=2)
+
+    except requests.exceptions.Timeout:
+        logger.error("🚨 [SERPER SEARCH] Live network gateway timed out.")
+        return json.dumps({"status": "NETWORK_TIMEOUT", "message": "Failed to scrape Google within 6 seconds."})
+    except Exception as err:
+        logger.error(f"🚨 [SERPER SEARCH] Execution exception: {str(err)}")
+        return json.dumps({"status": "ERROR", "message": str(err)})
+
+# Updated tools export list list variable
+FINANCE_DIAGNOSTIC_TOOLS = [regex_tool, mdx_tool, metadata_tool, google_serper_search]

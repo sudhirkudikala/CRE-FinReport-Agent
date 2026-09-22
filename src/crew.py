@@ -31,14 +31,17 @@ class PafeIntelligentOrchestrator():
     @agent
     def telemetry_parser(self) -> Agent:
         from tools.mcp_mdx_tool import execute_mcp_mdx_orchestration
-        from tools.finreport_diagnostics import parse_unstructured_pax_logs, extract_nested_mdx_queries
+        # Update google_serper_search to the local import line
+        from tools.finreport_diagnostics import parse_unstructured_pax_logs, extract_nested_mdx_queries, google_serper_search
         return Agent(
             config=self.agents_config['telemetry_parser'],
             llm=self.fast_llm,
-            tools=[execute_mcp_mdx_orchestration, parse_unstructured_pax_logs, extract_nested_mdx_queries],
+            # Update Mount the tool into the execution array
+            tools=[execute_mcp_mdx_orchestration, parse_unstructured_pax_logs, extract_nested_mdx_queries, google_serper_search],
             verbose=True,
             allow_delegation=False
         )
+
 
     @agent
     def underwriting_matcher(self) -> Agent:
