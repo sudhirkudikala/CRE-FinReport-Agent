@@ -1,19 +1,17 @@
 # ====================================================================================
-# PAfE/PAX Intelligent Orchestrator: Locked Dependency Manifest
-# Optimized strictly for Python 3.11 runtime isolation environments
+# PAfE/PAX Intelligent Orchestrator: Dependency Manifest
+# Conflict-free layer optimized for Python 3.11 runtimes
 # ====================================================================================
 
-# Core Agentic Orchestration Framework
-crewai==0.28.8
-langchain-openai==0.1.6
+# Core Agentic Orchestration Framework (Loosened to allow clean tree resolution)
+crewai>=0.28.8
+crewai-tools>=0.1.6
+langchain-openai>=0.1.0
 
 # High-Velocity Web Server & Microservice Gateway
-fastapi==0.110.1
-uvicorn==0.29.0
+fastapi>=0.110.0
+uvicorn>=0.29.0
 
-# Deterministic Data Ingestion & Schema Governance
-pydantic==2.6.4
-
-# Enterprise Connection Handling & Cryptography
-requests==2.31.0
-python-dotenv==1.0.1
+# Enterprise Connection Handling & Secrets Governance
+requests>=2.31.0
+python-dotenv>=1.0.0

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/sudhir/CRE-FinReport-Agent/src/main.py", line 7, in <module>
+    from fastapi import FastAPI, HTTPException, BackgroundTasks, status
+ModuleNotFoundError: No module named 'fastapi'
