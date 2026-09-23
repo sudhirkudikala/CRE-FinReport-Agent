@@ -18,7 +18,33 @@ This agentic system changes the support paradigm from **reactive IT ticket queue
 
 ---
 
-## 🤖 Multi-Agent Architecture & Topology
+## 🏛️ Comprehensive Systems & Data Architecture Matrix
+
+The platform is engineered around a decoupled, multi-tiered infrastructure designed to process low-latency streaming cell matrices while maintaining strict control plane governance over non-deterministic AI agent behaviors.
+
+```text
+  [ 🍏 FRONTEND INTERFACE LAYER ]  Excel Task Pane Add-in (Office.js) / Teams Adaptive Cards
+                                       │
+                         HTTP POST     ▼   /api/v1/diagnose (Async Ingestion Payload)
+  [ 🤖 CONTROL PLANE ]        ┌────────────────────────────────────────────────────────┐
+                              │                 FASTAPI GATEWAY SERVICE                │
+                              │  • Ingests Telemetry Trace • Spawns CrewAI Async Tasks │
+                              │  • Enforces OAuth2 Auth     • Maps JSON-RPC Tool Rules │
+                              └────────┬───────────────────────────────┬───────────────┘
+                                       │                               │
+                MDX Query Verification ▼                               ▼ Lineage Tracing Arrays
+  [ 📊 SEMANTIC LAYER ]       GraphQL Federation / TM1 API    Apache Arrow Flight SQL [ 🛢️ DATA PLANE ]
+                              (Dimension/Hierarchy Audit)     (Zero-Copy Binary gRPC Stream)
+```
+
+### ⚙️ Multi-Layer Technical Specification:
+1. **Control Plane (FastAPI / CrewAI / MCP):** Manages web request lifecycles. It utilizes `BackgroundTasks` to parse incoming text telemetry arrays, yields an instant tracking job key (`job_id`) to prevent user interface freezing, and enforces a rigid JSON-RPC communication schema to map custom tools.
+2. **Semantic Layer (GraphQL Federation / TM1 REST):** Validates and verifies corporate finance taxonomies, asset metadata maps, and dimension paths (e.g., checking `Project:JV_09_Offset` element availability) before querying physical storage engines.
+3. **Data Plane (Apache Arrow Flight SQL):** Engineered to stream millions of historical transaction cells directly from the Enterprise Data Warehouse (EDW) using zero-copy binary gRPC buffers, eliminating standard Python serialization string overhead limits.
+
+---
+
+## 🤖 Multi-Agent Topology & Corrective RAG (CRAG) Firewall
 
 The system orchestrates a specialized "Crew" of four autonomous micro-agents split rigidly by focus to prevent prompt distraction, enforce enterprise guardrails, and maximize execution speed:
 
@@ -27,8 +53,8 @@ The system orchestrates a specialized "Crew" of four autonomous micro-agents spl
                                │
                                ▼
               ┌─────────────────────────────────┐
-              │    1. PAX Telemetry Parser      │ ◄── Audits data lineage via regex/MDX tools,
-              │         (gpt-4o-mini)           │     extracting formula patterns and faults.
+              │    1. PAX Telemetry Parser      │ ◄── Audits data lineage via regex/MDX/Serper tools,
+              │         (gpt-4o-mini)           │     extracting formula patterns and forum fixes.
               └────────────────┬────────────────┘
                                │
                                ▼ [Lineage Variance Context]
@@ -50,13 +76,11 @@ The system orchestrates a specialized "Crew" of four autonomous micro-agents spl
               └─────────────────────────────────┘
 ```
 
-### 🛡️ Enterprise Guardrail Matrix & Corrective RAG (CRAG) Firewall
-The orchestration engine implements strict, deterministic functional limitations to protect multi-dimensional cube environments from data corruption or unauthorized automated adjustments. 
-
-If the crew encounters an issue tied to **complex accounting treatments, cross-dimensional consolidation offsets (Project/Market/Joint Venture), or stranded in-memory "dirty cell" updates**, the system runs a specialized **CRAG Evaluation Gateway** tool to grade the telemetry context before executing any code.
-1. **Deterministic Grading Check:** Evaluates numerical variances against a hardcoded **$50,000,000 Materiality Threshold** and checks for uncommitted dirty cells in the memory layer.
-2. **Asynchronous Ticket Generation:** If a threshold breach or memory lock is flagged, the automation path freezes and dispatches a structured REST API payload to initialize an emergency ServiceNow P1 tracking ticket.
-3. **Direct Cube Owner Alert:** Routes an automated warning via internal SMTP Relays containing raw lineage details, uncommitted record counts, and target impact models directly to the Human Expert.
+### 🛡️ Enterprise Guardrail Matrix & Grading Firewall
+The orchestration engine implements a deterministic **CRAG Grading Layer** (`crag_evaluator_tool.py`) that acts as an inline compliance gatekeeper. If the crew encounters issues tied to complex accounting treatments, consolidation adjustments, or uncommitted database cells, it halts automated processing and triggers an escalation loop:
+1. **Deterministic Materiality Evaluation:** Evaluates retrieved variance values against a strict **$50,000,000 Materiality Threshold** and checks the volatile memory array count (`dirty_cells_in_memory_slice > 0`).
+2. **Asynchronous Ticket Generation:** Dispatches an automated, structured REST API payload to initialize a ServiceNow P1 tracking incident inside the assignment queue.
+3. **Direct Cube Owner Alert:** Instantly triggers an internal SMTP mail relay connection to send a priority system diagnostic summary directly to the designated human EPM administrator.
 
 ---
 
@@ -73,10 +97,10 @@ This repository uses a decoupled, production-ready framework to ensure clean, cr
 │   ├── crew.py              # CrewAI initialization & lazy tool-import loading maps
 │   ├── main.py              # FastAPI REST Web Gateway & Asynchronous background workers
 │   └── tools/               # Custom Extension Module Toolkit
-│       ├── crag_evaluator_tool.py # [NEW] Deterministic CRAG grading engine framework
+│       ├── crag_evaluator_tool.py # Deterministic CRAG grading engine framework
 │       ├── escalation_tool.py     # ServiceNow REST API and SMTP mail relay connector
-│       ├── finance_diagnostics.py # [NEW] Financial data warehouse lineage auditor
-│       ├── finreport_diagnostics.py # [NEW] Regex filters, MDX and risk mapping suite
+│       ├── finance_diagnostics.py # Financial data warehouse lineage auditor
+│       ├── finreport_diagnostics.py # Regex filters, MDX, and Serper live forum scraper
 │       └── mcp_mdx_tool.py        # MDX Query compiler with sliding rate limits & caching
 ├── .env.example             # Standardized template for environment variables
 ├── .gitignore               # Strict exclusion matrix (.venv, secrets, local caches)
